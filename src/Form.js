@@ -1,6 +1,23 @@
 import * as React from 'react';
 
 export default class Form extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = { msg: '', secretMsg: ''};
+	}
+
+	encryptMsg = (msg) => {
+		return msg.split("").reverse().join("").split(" ").reverse().join(" ");
+	}
+
+	handleChange = (event) => {
+		const msg = event.target.value;
+		this.setState({
+			msg,
+			secretMsg: this.encryptMsg(msg)
+		});
+	}
+
 	render() {
 		return (
 			<form>
@@ -8,13 +25,15 @@ export default class Form extends React.Component {
 					<label> INPUT </label>
 					<textarea
 						rows="8"
-						value="This is where the user enters the message"
+						placeholder="Have a nice day, too! ;)"
+						value={this.state.msg}
+						onChange={this.handleChange}
 					/>
 				</div>
 				<div class="box">
 					<strong> OUTPUT </strong>
 					<pre>
-						This is where the reversed string should be displayed
+						{this.state.secretMsg}
 					</pre>
 				</div>
 			</form>
